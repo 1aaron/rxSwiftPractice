@@ -7,25 +7,31 @@
 //
 
 import UIKit
+import RxSwift
 
-protocol CharacterDelegate {
+/*protocol CharacterDelegate {
   func didSelectCharacter(_ name:String)
-}
+}*/
 class DetailViewCntroller: UIViewController {
 
-  var delegate:CharacterDelegate?
-  
+  //var delegate:CharacterDelegate?
+
+  private let selectedCharacterVar = Variable("User")
+  var selectedCharacter: Observable<String> {
+    return selectedCharacterVar.asObservable()
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view, typically from a nib.
   }
 
   @IBAction func characterSelected(_ sender: UIButton) {
     guard let characterName = sender.titleLabel?.text else { return }
-    if let delegateObject = delegate {
+    selectedCharacterVar.value = characterName
+    /*if let delegateObject = delegate {
       delegateObject.didSelectCharacter(characterName)
       navigationController?.popViewController(animated: true)
-    }
+    }*/
   }
 }
 
